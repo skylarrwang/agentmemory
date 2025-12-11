@@ -75,7 +75,9 @@ New message:
 {current_message}
 
 Decide if this is a new topic or a continuation of the recent conversation.
-Be conservative: only say it's a new topic if the subject clearly changes.
+A new topic means the subject matter has clearly changed (e.g. from work to hobbies, from technical discussion to personal plans).
+
+If the new message is about a completely different subject than the recent conversation, set switch to true.
 
 Return JSON in this exact format:
 {{

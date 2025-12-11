@@ -72,10 +72,10 @@ Long term context construction:
 - Topic embeddings computed over summary text (or topic name if summary is placeholder)
 
 ## Tunable Parameters
-These all can, and need, to be adjusted!
+These all can (and need) to be adjusted!
 
 - MAX_CONTEXT_CHARS = 25000: Topic size limit before auto-closing a topic
-- Topic shift detection: similarity_threshold = 0.55 (embedding similarity to skip LLM check)
+- Topic shift detection: similarity_threshold = 0.45 (embedding similarity to skip LLM check)
     - This one is actually intentionally pretty high because you ideally want to be conservative with topic switches. Context windows are larger so you can afford to err on the side of having huge topics as opposed to many small topics (and risk losing information in the topic summarization / compression)
 - Short-term retrieval: min_threshold = 0.75, max_k = 2 
 - Long-term retrieval: min_threshold = 0.5, max_k = 3 
@@ -94,7 +94,7 @@ On topic close:
 - Embedding generation: 1 call (for closed topic summary/name)
 
 On topic shift detection:
-- LLM verification: 1 call (only if embedding similarity ≤ 0.55)
+- LLM verification: 1 call (only if embedding similarity ≤ 0.45)
 
 At session end:
 - Notepad update: 1 call (only if session has topics with ≥2 messages)
@@ -103,7 +103,9 @@ Total per turn: Typically 3-4 LLM calls (response + facts + topic shift verifica
 
 ## Test Harness
 
-Three test sessions to verify memory functionality. (Thank you Claude!)
+Three test sessions to verify memory functionality. For an automated version of this, run:
+
+`python eval/harness.py`
 
 ### Test 1: Session 1 - Short-Term Memory + Fact Storage
 
@@ -120,12 +122,11 @@ end session: type `quit`
 
 what to check:
 - assistant should understand "it" refers to the TensorFlow project
-- assistant should recall details from earlier in the conversation
-- facts extracted: name (Alice), occupation (data scientist), company (Google)
 - check `longterm_memory/{username}/facts.json` for stored facts with importance scores
 - facts stored immediately after each turn
-- topic w summary has been stored
-- potentially, some notes in notepad.md
+- after session ends...
+    - topic w summary has been stored
+    - potentially, some notes in notepad.md
 
 
 ### Test 2: Session 2 - Long-Term Memory Retrieval
@@ -170,6 +171,7 @@ what to check:
 - check `sessions/{username}.{session_num}/topics.json` - should have closed neural networks topic
 - check `sessions/{username}.{session_num}/topics.json` - should have waffle house topic (or current open topic)
 - context retrieval finds neural networks topic when querying about previous questions (the answer should relate to what the summary of the neural networks topic contains!)
+- session should finish with `closed topics in session: 1`
 
 end session: type `quit`
 
