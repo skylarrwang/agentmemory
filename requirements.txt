@@ -1,0 +1,7 @@
+openai
+python-dotenv
+pydantic>=2.0.0
+numpy
+pytest>=7.0.0
+pytest-cov>=4.0.0
+

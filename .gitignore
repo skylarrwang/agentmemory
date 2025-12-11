@@ -1,0 +1,38 @@
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# environment variables
+.env
+.env.local
+.env.*
+
+# ide
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# data directories
+sessions/
+longterm_memory/
+
+# testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# os
+.DS_Store
+Thumbs.db
+
