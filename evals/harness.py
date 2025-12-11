@@ -29,7 +29,7 @@ def test_short_term_memory():
     for i, query in enumerate(queries, 1):
         print(f"\n[{i}] user: {query}")
         response = agent.single_turn_chat(query)
-        print(f"     assistant: {response[:100]}...")
+        print(f"     assistant: {response[:300]}...")
     
     print("\nchecking facts...")
     facts = agent.memory.long_term.facts
@@ -59,7 +59,7 @@ def test_long_term_memory():
     for i, query in enumerate(queries, 1):
         print(f"\n[{i}] user: {query}")
         response = agent.single_turn_chat(query)
-        print(f"     assistant: {response[:150]}...")
+        print(f"     assistant: {response[:300]}...")
     
     print("\nchecking stored data...")
     print(f"  facts: {len(agent.memory.long_term.facts)}")
@@ -78,10 +78,10 @@ def test_topic_switching():
     agent = Agent("test_user")
     
     queries = [
-        "I want to learn about neural networks and deep learning",
-        "Can you explain backpropagation in detail?",
-        "How does gradient descent work with backpropagation?",
-        "What are the differences between different activation functions?",
+        "I want to learn about neural networks and deep learning. Give me a brief overview of the topic.",
+        "Can you explain backpropagation in one sentence?",
+        "How does gradient descent work with backpropagation? Be brief.",
+        "What are the differences between different activation functions? Give me 3 main ones.",
         "Actually I want to go to Waffle House right now",
         "What are the best items to order at Waffle House?",
         "How does their hash browns preparation work?",
@@ -92,7 +92,7 @@ def test_topic_switching():
     for i, query in enumerate(queries, 1):
         print(f"\n[{i}] user: {query}")
         response = agent.single_turn_chat(query)
-        print(f"     assistant: {response[:150]}...")
+        print(f"     assistant: {response[:300]}...")
         
         # check for topic switches
         if i > 1:
