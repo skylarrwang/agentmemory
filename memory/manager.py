@@ -70,6 +70,9 @@ class MemoryManager:
 
         # update notepad
         self.long_term.update_notepad()
+        
+        # prune stale low-importance facts
+        self.long_term._prune_facts()
 
     def _persist_closed_topic(self, topic: Topic) -> None:
         """persist a single closed topic into long-term memory"""

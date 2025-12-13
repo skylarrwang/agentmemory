@@ -219,7 +219,7 @@ class ShortTermMemory:
             return None
         
         # for topics with 1 message, skip llm analysis but still persist
-        if len(self.curr_open_topic.messages) < 2:
+        if len(self.curr_open_topic.messages) < 1:
             self.curr_open_topic.name = self.curr_open_topic.name or "Empty Topic"
             self.curr_open_topic.summary = "Brief exchange with minimal content."
             

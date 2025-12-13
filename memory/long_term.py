@@ -52,6 +52,8 @@ class LongTermMemory:
         # 2. Notepad
         notepad = self._read_notepad()
         # limit notepad length to avoid token bloat
+        # should probably make this configurable, and in the LT add a notepad purging method
+        # TODO: could be the compression promtp
         if len(notepad) > 2000:
             notepad = notepad[:2000] + "..."
         
@@ -103,9 +105,6 @@ class LongTermMemory:
                 "importance": importance,
                 "updated_at": now,
             }
-        
-        # optionally prune stale low-importance facts
-        self._prune_facts()
         
         # persist all facts
         with self.facts_file.open("w", encoding="utf-8") as f:
